@@ -2,66 +2,58 @@
 #include <cmath>
 using namespace std;
 
-/* 
+#include <iostream>
+#include <cmath> // Para usar la función fabs()
+#include <iomanip>
 
-1. De acuerdo con el m ́etodo de bisecci ́on, encuentre soluciones precisas dentro de 10−5 para las siguientes
-funciones:
-(a) x − 2−x = 0 para [0, 1]
-(b) ex − x2 + 3x − 2 = 0 para [0, 1]
-(c) x cos x − 2x2 + 3x − 1 = 0 para [0.2, 0.3] y [1.2, 1.3]
-Realice un esbozo de la gr ́afica junto conla iteraci ́on del m ́etodo aplicado.
-*/
-double funcion(double x) {
-    return x - pow(2, -x);
+using namespace std;
+
+double f(double x) {
+    // Usamos la función dada: x^3 - 7x^2 + 14x - 6
+    return x*x*x - 7*x*x + 14*x - 6;
 }
-double biseccion(double a, double b, double tol, int max_iter) {
-    if (funcion(a) * funcion(b) > 0) {
-        cout << "La función no cambia" << endl;
-        return -1;
+
+// Método de bisección
+void biseccion(double a, double b, double tol) {
+
+    if (f(a) * f(b) >= 0) {
+        cout << "No se puede asegurar la existencia de una raíz en el intervalo dado." << endl;
+        cout << "No se puede asegurar la existencia de una raíz en el intervalo dado." << f(a) << endl;
+        cout << "No se puede asegurar la existencia de una raíz en el intervalo dado." << f(b) << endl;
+        return;
     }
 
-    int iteracion = 0;
-    double midpoint;
-    while ((b - a) / 2.0 > tol) {
-        midpoint = (a + b) / 2.0;
-        if (funcion(midpoint) == 0) {
-            return midpoint;
-        } else if (funcion(a) * funcion(midpoint) < 0) {b = midpoint;
+    double c = a;
+
+    int i = 0;
+    int iter = 0;
+    while (fabs(f(b - a)) > tol) {
+        double c = (a + b) / 2;
+
+        if (fabs(f(c)) < tol || (b - a) / 2 < tol) {
+            std::setprecision(18);
+            std::cout << "La raíz encontrada es: " << c << " después de " << iter++ << " iteraciones" << endl;
+            return;
+        }
+
+        if (f(c) * f(a) < 0) {
+            b = c;
         } else {
-            a = midpoint;
+            a = c;
         }
-
-        iteracion++;
-        if (iteracion >= max_iter) {
-            cout << "No más iteraciones" << endl;
-            break;
-        }
+        iter++;
+        i++;
     }
-
-    return (a + b) / 2.0;
+ 
+    cout << "La raíz después de " << iter << " iteraciones es: " << c << endl;
 }
 
 int main() {
-    double a = 0;
-    double b = 1;
-    double tolerancia = 0.00001;
-    int max_iteraciones = 1000;
+    double a = 3.2, b = 4;
+    // Tolerancia
+    double tol = 10e-2;
 
-    double raiz = biseccion(a, b, tolerancia, max_iteraciones);
-
-    if (raiz != -1) {
-        cout << "Raiz aporx es" << raiz << endl;
-    }
+    biseccion(a, b, tol);
 
     return 0;
-}
-
-
-double funcion2(double x) {
-    return exp(x) - pow(x, 2) + 3*x - 2;
-}
-
-double funcion2(double x) {
-    return // x cos x − 2x2 + 3x − 1;
-   // Me falta esa
 }
