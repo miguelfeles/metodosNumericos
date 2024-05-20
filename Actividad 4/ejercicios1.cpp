@@ -48,7 +48,6 @@ int main() {
     int max_iteraciones = 1000;
 
     double raiz = biseccion(a, b, tolerancia, max_iteraciones);
-
     if (raiz != -1) {
         cout << "Raiz aporx es" << raiz << endl;
     }
